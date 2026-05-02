@@ -55,5 +55,5 @@ dkms.conf
 *.dwo
 
 # Build artifacts
-*.iso
 sabal-os
+build/
