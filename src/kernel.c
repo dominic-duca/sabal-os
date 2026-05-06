@@ -6,10 +6,6 @@
 #include "vga.h"
 #include "string.h"
 
-#define VGA_WIDTH   80
-#define VGA_HEIGHT  25
-#define VGA_MEMORY  0xB8000
-
 size_t terminal_row, terminal_column;
 uint8_t terminal_color;
 
