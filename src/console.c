@@ -22,15 +22,36 @@ void console_init(void) {
 }
 
 void console_putchar(char c) {
-    const size_t offset = cursor_y * VGA_WIDTH + cursor_x;
-
-    console_vram[offset] = vga_entry(c, console_color);
-
-    if (++cursor_x == VGA_WIDTH) {
+    /* Check if c is a control character */
+    switch (c) {
+        case '\n':
         cursor_x = 0;
+        cursor_y++;
+        
+        break;
 
-        if (++cursor_y == VGA_HEIGHT)
-            cursor_y = 0;
+        /*
+        The other ones here
+
+        ...
+        */
+
+        default:
+        /* Check if c is a printable character */
+        if (c > 31 && c < 127) {
+            const size_t offset = cursor_y * VGA_WIDTH + cursor_x;
+
+            console_vram[offset] = vga_entry(c, console_color);
+
+            if (++cursor_x == VGA_WIDTH) {
+                cursor_x = 0;
+
+                if (++cursor_y == VGA_HEIGHT)
+                    cursor_y = 0;
+            }
+        }
+
+        break;
     }
 }
 
