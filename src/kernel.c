@@ -4,14 +4,7 @@
 #include <stdint.h>
 
 #include "vga.h"
-
-size_t strlen(const char* str)  {
-	size_t len = 0;
-	while (str[len])
-        len++;
-
-	return len;
-}
+#include "string.h"
 
 #define VGA_WIDTH   80
 #define VGA_HEIGHT  25
