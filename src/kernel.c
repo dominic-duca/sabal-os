@@ -42,7 +42,7 @@ void terminal_putchar(char c) {
 }
 
 void terminal_write(const char* data) {
-    const size_t size = strlen(data);
+    const size_t size = string_len(data);
 
     for (size_t i = 0; i < size; i++)
         terminal_putchar(data[i]);
