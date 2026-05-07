@@ -1,5 +1,4 @@
 
-
 #include "console.h"
 
 extern const char* SABAL_PALMETTO_ASCII;
