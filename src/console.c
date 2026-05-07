@@ -8,6 +8,8 @@ static uint8_t console_color;
 
 static uint16_t* console_vram = (uint16_t*) VGA_MEMORY;
 
+static bool console_escape = 0;
+
 void console_init(void) {
     cursor_x = cursor_y = 0;
     console_color = vga_entry_color(CONSOLE_DEFAULT_FG, CONSOLE_DEFAULT_BG);
@@ -22,12 +24,36 @@ void console_init(void) {
 }
 
 void console_putchar(char c) {
-    /* Check if c is a control character */
+    /* Check if c is part of an escape sequence */
+    if (console_escape) {
+        /* Treat c as a VGA text mode color byte */
+        console_color = (uint8_t) c;
+
+        console_escape = 0;
+        return;
+    }
+
     switch (c) {
+        /* Check if c is a control character */
+        case '\x1B':
+        console_escape = 1;
+
+        break;
+
         case '\n':
         cursor_x = 0;
         cursor_y++;
         
+        break;
+
+        case '\t':
+        cursor_x = (cursor_x / CONSOLE_TAB_WIDTH) * CONSOLE_TAB_WIDTH + CONSOLE_TAB_WIDTH;
+
+        if (cursor_x >= VGA_WIDTH) {
+            cursor_x = 0;
+            cursor_y++;
+        }
+
         break;
 
         /*
