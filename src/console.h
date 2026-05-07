@@ -11,6 +11,8 @@
 #define CONSOLE_DEFAULT_FG VGA_COLOR_YELLOW
 #define CONSOLE_DEFAULT_BG VGA_COLOR_BLACK
 
+#define CONSOLE_TAB_WIDTH 8
+
 void console_init(void);
 
 void console_putchar(char c);
