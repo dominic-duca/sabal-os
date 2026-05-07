@@ -85,3 +85,9 @@ void console_write(const char* str) {
     for (size_t i = 0; str[i]; i++)
         console_putchar(str[i]);
 }
+
+void console_write_centered(const char* str) {
+    cursor_x = (VGA_WIDTH - string_len(str)) / 2;
+
+    console_write(str);
+}

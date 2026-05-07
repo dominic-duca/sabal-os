@@ -18,4 +18,6 @@ void console_init(void);
 void console_putchar(char c);
 void console_write(const char* str);
 
+void console_write_centered(const char* str);
+
 #endif
