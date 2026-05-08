@@ -20,12 +20,14 @@ void string_rev(char str[], size_t len) {
     }
 }
 
-void string_itoa(int a, char str[], int base) {
+char* string_itoa(int a, char str[], int base) {
     int i = 0;
 
     if (a == 0) {
         str[i++] = 0;
         str[i] = '\0';
+
+        return str;
     }
 
     bool negative = 0;
@@ -47,8 +49,10 @@ void string_itoa(int a, char str[], int base) {
     str[i] = '\0';
 
     string_rev(str, i);
+
+    return str;
 }
 
-void string_itoa_10(int a, char str[]) {
-    string_itoa(a, str, 10);
+char* string_itoa_10(int a, char str[]) {
+    return string_itoa(a, str, 10);
 }

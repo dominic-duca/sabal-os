@@ -10,8 +10,8 @@ size_t string_len(const char* str);
 
 void string_rev(char str[], size_t len);
 
-void string_itoa(int a, char str[], int base);
+char* string_itoa(int a, char str[], int base);
 
-void string_itoa_10(int a, char str[]);
+char* string_itoa_10(int a, char str[]);
 
 #endif
