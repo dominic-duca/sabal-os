@@ -23,6 +23,18 @@ void console_init(void) {
     }
 }
 
+void console_update_cursor(void) {
+    const uint16_t offset = cursor_y * VGA_WIDTH + cursor_x;
+
+    // Set low byte
+    io_outb(0x3D4, 0x0F);
+	io_outb(0x3D5, (uint8_t) (offset));
+
+    // Set high byte
+    io_outb(0x3D4, 0x0E);
+	io_outb(0x3D5, (uint8_t) (offset >> 8));
+}
+
 void console_putchar(char c) {
     /* Check if c is part of an escape sequence */
     if (console_escape) {
@@ -84,6 +96,8 @@ void console_putchar(char c) {
 void console_write(const char* str) {
     for (size_t i = 0; str[i]; i++)
         console_putchar(str[i]);
+    
+    console_update_cursor();
 }
 
 void console_write_centered(const char* str) {
