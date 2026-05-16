@@ -3,6 +3,9 @@
 #define GDT_H
 
 #include <stdint.h>
+#include <stddef.h>
+
+#define GDT_ENTRY_LIMIT 8192
 
 typedef struct {
     uint16_t limit; /* GDT size (in bytes) - 1 */
