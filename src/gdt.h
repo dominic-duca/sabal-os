@@ -5,6 +5,12 @@
 #include <stdint.h>
 
 typedef struct {
+    uint16_t limit; /* GDT size (in bytes) - 1 */
+    uint32_t base;  /* GDT address */
+
+} gdt_reg_t __attribute__ ((packed));
+
+typedef struct {
     /* Lower dword */
     uint16_t limit_l;
     uint16_t base_l;
