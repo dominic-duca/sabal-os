@@ -1,6 +1,9 @@
 
 #include "gdt.h"
 
+static gdt_seg_t gdt[GDT_ENTRY_LIMIT];
+static size_t gdt_size;
+
 gdt_seg_t gdt_entry(uint32_t limit, uint32_t base, uint8_t access, uint8_t flags) {
     gdt_seg_t entry;
 
@@ -17,4 +20,8 @@ gdt_seg_t gdt_entry(uint32_t limit, uint32_t base, uint8_t access, uint8_t flags
     entry.base_u = (uint8_t) (base >> 24);
 
     return entry;
+}
+
+void gdt_push_entry(gdt_seg_t entry) {
+    gdt[gdt_size++] = entry;
 }
