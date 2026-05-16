@@ -26,6 +26,8 @@ typedef struct {
 
 } __attribute__ ((packed)) gdt_seg_t;
 
+void gdt_update_reg(void);
+
 gdt_seg_t gdt_entry(uint32_t limit, uint32_t base, uint8_t access, uint8_t flags);
 void gdt_push_entry(gdt_seg_t entry);
 
