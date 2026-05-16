@@ -33,3 +33,17 @@ void gdt_update_reg(void) {
     gdt_reg.limit = (uint16_t) (sizeof(gdt_seg_t) * gdt_size - 1);
 }
 
+void gdt_init(void) {
+    gdt_size = 0;
+
+    gdt_push_entry(gdt_entry(NULL, NULL, NULL, NULL)); /* NULL */
+
+    /* ! accessed (A) bits are set to 1 ! */
+    gdt_push_entry(gdt_entry(0xFFFFF, 0x00000000, 0x9B, 0x0C)); /* Kernel space code */
+    gdt_push_entry(gdt_entry(0xFFFFF, 0x00000000, 0x93, 0x0C)); /* Kernel space data */
+
+    gdt_push_entry(gdt_entry(0xFFFFF, 0x00000000, 0xFB, 0x0C)); /* User space code */
+    gdt_push_entry(gdt_entry(0xFFFFF, 0x00000000, 0xF3, 0x0C)); /* User space data */
+
+    gdt_update_reg();
+}
