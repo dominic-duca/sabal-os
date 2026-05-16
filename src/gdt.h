@@ -17,4 +17,6 @@ typedef struct {
 
 } gdt_seg_t __attribute__ ((packed));
 
+gdt_seg_t gdt_entry(uint32_t limit, uint32_t base, uint8_t access, uint8_t flags);
+
 #endif
