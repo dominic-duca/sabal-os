@@ -1,7 +1,7 @@
 
 #include "gdt.h"
 
-static gdt_reg_t gdt_reg;
+gdt_reg_t gdt_reg;
 
 static gdt_seg_t gdt[GDT_ENTRY_LIMIT];
 static size_t gdt_size;
