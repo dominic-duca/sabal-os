@@ -46,4 +46,6 @@ void gdt_init(void) {
     gdt_push_entry(gdt_entry(0x000FFFFF, 0x00000000, 0xF3, 0x0C)); /* User space data */
 
     gdt_update_reg();
+    
+    gdt_load();
 }
