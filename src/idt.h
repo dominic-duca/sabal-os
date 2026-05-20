@@ -17,7 +17,7 @@ typedef struct {
 
     /* Upper dword */
     uint8_t null;
-    uint8_t type_attrib; /* Type, DPL, P */
+    uint8_t type_attr; /* Type, DPL, P */
 
     uint16_t service_u; /* ISR */
 
