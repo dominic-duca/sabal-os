@@ -1,6 +1,9 @@
 
 #include "idt.h"
 
+static idt_gate_t idt[IDT_ENTRY_LIMIT];
+static size_t idt_size;
+
 idt_gate_t idt_entry(uint32_t service, uint16_t segment, uint8_t type, uint8_t dpl) {
     idt_gate_t entry;
 
@@ -15,4 +18,8 @@ idt_gate_t idt_entry(uint32_t service, uint16_t segment, uint8_t type, uint8_t d
     entry.service_u = (uint16_t) (service >> 16);
 
     return entry;
+}
+
+void idt_push_entry(idt_gate_t entry) {
+    idt[idt_size++] = entry;
 }
