@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#define IDT_ENTRY_LIMIT 256
+
 typedef struct {
     uint16_t limit; /* IDT size (in bytes) - 1 */
     uint32_t base;  /* IDT address */
