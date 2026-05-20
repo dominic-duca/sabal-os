@@ -27,5 +27,6 @@ typedef struct {
 } __attribute__ ((packed)) idt_gate_t;
 
 idt_gate_t idt_entry(uint32_t service, uint16_t segment, uint8_t type, uint8_t dpl);
+void idt_push_entry(idt_gate_t entry);
 
 #endif
