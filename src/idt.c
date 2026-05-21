@@ -30,3 +30,14 @@ void idt_update_reg(void) {
     idt_reg.base = (uint32_t) idt;
     idt_reg.limit = (uint16_t) (sizeof(idt_gate_t) * idt_size - 1);
 }
+
+void idt_init(void) {
+    idt_size = 0;
+
+    /* TODO: Push entries to idt[] */
+
+    idt_update_reg();
+
+    __asm__ volatile ("lidt %0" : : "m" (idt_reg) : ); /* Load IDT */
+    __asm__ volatile ("sti");
+}
