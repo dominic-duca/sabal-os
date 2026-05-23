@@ -9,13 +9,13 @@ SRC_DIR		:= src
 BUILD_DIR	:= build
 ISO_DIR		:= iso
 
-# Find every .c and .s source in SRC_DIR
-C_SOURCES 	:= $(wildcard $(SRC_DIR)/*.c)
-S_SOURCES 	:= $(wildcard $(SRC_DIR)/*.s)
+# Recursively find every .c and .s source in SRC_DIR/
+C_SOURCES 	:= $(shell find $(SRC_DIR) -name "*.c")
+S_SOURCES 	:= $(shell find $(SRC_DIR) -name "*.s")
 
-# Infer .o filenames from source filenames
-OBJECTS 	:= $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(C_SOURCES)) \
-				$(patsubst $(SRC_DIR)/%.s, $(BUILD_DIR)/%.o, $(S_SOURCES))
+# Infer .o filenames from source filenames (tag .s sources as .s.o to avoid collisions)
+OBJECTS 	:= $(patsubst %.c, $(BUILD_DIR)/%.o, $(patsubst $(SRC_DIR)/%, %, $(C_SOURCES))) \
+			   $(patsubst %.s, $(BUILD_DIR)/%.s.o, $(patsubst $(SRC_DIR)/%, %, $(S_SOURCES)))
 
 KERNEL 		:= sabal-os
 
@@ -27,11 +27,13 @@ ISO			:= $(BUILD_DIR)/$(KERNEL).iso
 all: $(TARGET)
 
 # Compile .c sources
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # Assemble .s sources
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.s | $(BUILD_DIR)
+$(BUILD_DIR)/%.s.o: $(SRC_DIR)/%.s
+	mkdir -p $(dir $@)
 	$(AS) -o $@ $<
 
 # Link objects into kernel ELF and copy into ISO staging dir
@@ -44,9 +46,6 @@ iso: $(TARGET)
 
 run: iso
 	qemu-system-i386 -cdrom $(ISO) -serial stdio
-
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
 
 clean:
 	rm -rf $(BUILD_DIR)
