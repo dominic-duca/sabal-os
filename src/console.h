@@ -5,8 +5,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "util/string.h"
+
 #include "vga.h"
-#include "string.h"
 #include "io.h"
 
 #define CONSOLE_DEFAULT_FG VGA_COLOR_YELLOW

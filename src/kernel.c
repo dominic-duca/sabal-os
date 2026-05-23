@@ -1,6 +1,6 @@
 
-#include "gdt.h"
-#include "idt.h"
+#include "arch/i386/gdt.h"
+#include "arch/i386/idt.h"
 
 #include "console.h"
 

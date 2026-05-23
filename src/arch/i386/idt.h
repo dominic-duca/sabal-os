@@ -2,8 +2,8 @@
 #ifndef IDT_H
 #define IDT_H
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define IDT_ENTRY_LIMIT 256
 

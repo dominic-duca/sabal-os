@@ -2,12 +2,12 @@
 #ifndef GDT_H
 #define GDT_H
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define GDT_ENTRY_LIMIT 8192
 
-extern void gdt_load(void); /* In gdt_load.s */
+extern void gdt_load(void); /* In gdt.s */
 
 typedef struct {
     uint16_t limit; /* GDT size (in bytes) - 1 */
