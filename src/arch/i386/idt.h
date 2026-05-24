@@ -7,6 +7,14 @@
 
 #include "gdt.h"
 
+#define IDT_ENTRY_LIMIT     256
+#define IDT_EXCEPT_LIMIT    32
+
+#define IDT_ENTRY_TYPE_INT  0x0E
+#define IDT_ENTRY_TYPE_TRAP 0x0F
+
+#define IDT_ENTRY_DPL_0     0
+
 typedef struct {
     uint16_t limit; /* IDT size (in bytes) - 1 */
     uint32_t base;  /* IDT address */
