@@ -15,6 +15,8 @@
 
 #define IDT_ENTRY_DPL_0     0
 
+extern void* isr_stubs[]; /* In isr.s */
+
 typedef struct {
     uint16_t limit; /* IDT size (in bytes) - 1 */
     uint32_t base;  /* IDT address */
