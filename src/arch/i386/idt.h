@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define IDT_ENTRY_LIMIT 256
+#include "gdt.h"
 
 typedef struct {
     uint16_t limit; /* IDT size (in bytes) - 1 */
