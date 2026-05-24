@@ -1,7 +1,7 @@
 
 #include "idt.h"
 
-idt_reg_t idt_reg;
+static idt_reg_t idt_reg;
 
 static idt_gate_t idt[IDT_ENTRY_LIMIT];
 static size_t idt_size;
@@ -34,7 +34,17 @@ void idt_update_reg(void) {
 void idt_init(void) {
     idt_size = 0;
 
-    /* TODO: Push entries to idt[] */
+    /* Exception entries */
+    for (uint8_t vector = 0; vector < IDT_EXCEPT_LIMIT; vector++) {
+        idt_push_entry(idt_entry(
+            (uint32_t) isr_stubs[vector],
+            
+            GDT_KERNEL_CODE,
+
+            IDT_ENTRY_TYPE_INT,
+            IDT_ENTRY_DPL_0
+        ));
+    }
 
     idt_update_reg();
 
