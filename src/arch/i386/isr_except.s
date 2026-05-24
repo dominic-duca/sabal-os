@@ -2,12 +2,14 @@
 .extern isr_except_handler
 
 .macro isr_no_error_stub i
+.global isr_stub_\i
 isr_stub_\i:
     call isr_except_handler
     iret
 .endm
 
 .macro isr_error_stub i
+.global isr_stub_\i
 isr_stub_\i:
     call isr_except_handler
     iret
