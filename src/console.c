@@ -55,6 +55,8 @@ void console_putchar(char c) {
         case '\n':
         cursor_x = 0;
         cursor_y++;
+
+        console_update_cursor();
         
         break;
 
@@ -65,6 +67,8 @@ void console_putchar(char c) {
             cursor_x = 0;
             cursor_y++;
         }
+
+        console_update_cursor();
 
         break;
 
