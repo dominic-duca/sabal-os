@@ -5,6 +5,7 @@
 .global isr_stub_\i
 isr_stub_\i:
     pushal
+    cld
 
     call isr_except_handler
 
@@ -17,6 +18,7 @@ isr_stub_\i:
 .global isr_stub_\i
 isr_stub_\i:
     pushal
+    cld
 
     call isr_except_handler
 
