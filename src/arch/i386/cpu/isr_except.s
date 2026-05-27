@@ -4,14 +4,24 @@
 .macro isr_no_error_stub i
 .global isr_stub_\i
 isr_stub_\i:
+    pushal
+
     call isr_except_handler
+
+    popal
+
     iret
 .endm
 
 .macro isr_error_stub i
 .global isr_stub_\i
 isr_stub_\i:
+    pushal
+
     call isr_except_handler
+
+    popal
+
     iret
 .endm
 
