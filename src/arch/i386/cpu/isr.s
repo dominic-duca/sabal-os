@@ -1,5 +1,8 @@
 
+.extern keyboard_handler /* In drivers/keyboard.h */
+
 .global isr_stubs
+.global isr_stub_keyboard
 
 .altmacro
 .macro stub i
@@ -12,3 +15,13 @@ isr_stubs:
     stub %i
     .set i, i + 1
 .endr
+
+isr_stub_keyboard:
+    pushal
+    cld
+
+    call keyboard_handler
+
+    popal
+
+    iret
