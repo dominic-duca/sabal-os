@@ -19,6 +19,8 @@ static const char keyboard_scancode_ascii[] = {
     /* ... function keys and more here */
 };
 
+void keyboard_set_callback(keyboard_callback_t callback);
+
 void keyboard_handler(void);
 
 #endif
