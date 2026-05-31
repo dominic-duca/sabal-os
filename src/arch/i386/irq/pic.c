@@ -62,3 +62,7 @@ void pic_irq_unmask(uint8_t irq) {
     
     io_outb(port, io_inb(port) & ~(1 << irq));
 }
+
+void pic_irq_eoi(uint8_t irq) {
+    io_outb((irq < 8) ? PIC_1_COMMAND : PIC_2_COMMAND, PIC_EOI);
+}

@@ -15,10 +15,13 @@
 #define PIC_IRQ_CASCADE 0x02
 
 #define PIC_INIT        0x11
+#define PIC_EOI         0x20
 
 void pic_remap(int offset_primary, int offset_secondary);
 
 void pic_irq_mask(uint8_t irq);
 void pic_irq_unmask(uint8_t irq);
+
+void pic_irq_eoi(uint8_t irq);
 
 #endif
