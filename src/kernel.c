@@ -6,10 +6,38 @@
 
 #include "console.h"
 
+extern void idt_load(void);             /* In idt.s */
+extern void isr_stub_keyboard(void);    /* In isr.s */
+
 extern const char* SABAL_PALMETTO_ASCII;
 
 void kernel_keyboard_callback(char key_ascii) {
     console_putchar(key_ascii);
+}
+
+void kernel_idt_init(void) {
+    /* TODO: PIT */
+    idt_push_entry(idt_entry(
+        (uint32_t) 0,
+            
+        GDT_KERNEL_CODE,
+
+        IDT_ENTRY_TYPE_INT,
+        IDT_ENTRY_DPL_0
+    ));
+
+    /* PS/2 keyboard */
+    idt_push_entry(idt_entry(
+        (uint32_t) isr_stub_keyboard,
+            
+        GDT_KERNEL_CODE,
+
+        IDT_ENTRY_TYPE_INT,
+        IDT_ENTRY_DPL_0
+    ));
+
+    idt_update_reg();
+    idt_load();
 }
 
 void kernel_main(void) {
@@ -17,6 +45,8 @@ void kernel_main(void) {
 
     gdt_init();
     idt_init();
+    
+    kernel_idt_init(); /* Find a better name */
 
     keyboard_set_callback(kernel_keyboard_callback);
 
