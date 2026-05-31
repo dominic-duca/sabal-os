@@ -8,6 +8,8 @@
 
 #define KEYBOARD_PS2_IRQ    0x01
 
+typedef void (*keyboard_callback_t) (char key_ascii); 
+
 static const char keyboard_scancode_ascii[] = {
     0, '\e', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
     '\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
