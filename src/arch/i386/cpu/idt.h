@@ -15,6 +15,8 @@
 
 #define IDT_ENTRY_DPL_0     0
 
+extern void idt_load(void); /* In idt.s */
+
 extern void* isr_stubs[]; /* In isr.s */
 
 typedef struct {
