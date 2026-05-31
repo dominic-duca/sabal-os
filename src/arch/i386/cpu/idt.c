@@ -1,7 +1,7 @@
 
 #include "idt.h"
 
-static idt_reg_t idt_reg;
+idt_reg_t idt_reg;
 
 static idt_gate_t idt[IDT_ENTRY_LIMIT];
 static size_t idt_size;
@@ -48,6 +48,5 @@ void idt_init(void) {
 
     idt_update_reg();
 
-    __asm__ volatile ("lidt %0" : : "m" (idt_reg) : ); /* Load IDT */
-    __asm__ volatile ("sti");
+    idt_load();
 }
