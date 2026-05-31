@@ -18,4 +18,7 @@
 
 void pic_remap(int offset_primary, int offset_secondary);
 
+void pic_irq_mask(uint8_t irq);
+void pic_irq_unmask(uint8_t irq);
+
 #endif

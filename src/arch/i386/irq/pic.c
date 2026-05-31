@@ -34,3 +34,31 @@ void pic_remap(int offset_primary, int offset_secondary) {
     io_outb(PIC_1_DATA, 0xFF);
     io_outb(PIC_2_DATA, 0xFF);
 }
+
+void pic_irq_mask(uint8_t irq) {
+    uint8_t port;
+
+    if (irq < 8) {
+        port = PIC_1_DATA;
+
+    } else {
+        port = PIC_2_DATA;
+        irq -= 8;
+    }
+    
+    io_outb(port, io_inb(port) | (1 << irq));
+}
+
+void pic_irq_unmask(uint8_t irq) {
+    uint8_t port;
+
+    if (irq < 8) {
+        port = PIC_1_DATA;
+
+    } else {
+        port = PIC_2_DATA;
+        irq -= 8;
+    }
+    
+    io_outb(port, io_inb(port) & ~(1 << irq));
+}
