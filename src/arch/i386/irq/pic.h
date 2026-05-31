@@ -16,4 +16,6 @@
 
 #define PIC_INIT        0x11
 
+void pic_remap(int offset_primary, int offset_secondary);
+
 #endif
