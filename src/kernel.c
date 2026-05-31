@@ -7,6 +7,8 @@
 extern const char* SABAL_PALMETTO_ASCII;
 
 void kernel_main(void) {
+    __asm__ volatile ("cli");
+
     gdt_init();
     idt_init();
 
