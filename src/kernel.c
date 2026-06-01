@@ -57,4 +57,6 @@ void kernel_main(void) {
 
     console_init();
     console_write_centered("\nWelcome to Sabal OS!\n");
+
+    while (1) {}
 }
