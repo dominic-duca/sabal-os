@@ -50,6 +50,9 @@ void kernel_main(void) {
 
     keyboard_set_callback(kernel_keyboard_callback);
 
+    pic_remap(IDT_EXCEPT_LIMIT, IDT_EXCEPT_LIMIT + 8);
+    pic_irq_unmask(KEYBOARD_PS2_IRQ);
+
     __asm__ volatile ("sti");
 
     console_init();
