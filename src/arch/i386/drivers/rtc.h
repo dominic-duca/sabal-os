@@ -6,6 +6,19 @@
 
 #include "../../../util/datetime.h"
 
+#define RTC_CMOS        0x70
+#define RTC_CMOS_DATA   0x71
+
+#define RTC_CMOS_STATUS_B 0x0B
+
+#define RTC_CMOS_YEAR   0x09
+#define RTC_CMOS_MONTH  0x08
+#define RTC_CMOS_DAY    0x07
+
+#define RTC_CMOS_HOUR   0x04
+#define RTC_CMOS_MINUTE 0x02
+#define RTC_CMOS_SECOND 0x00
+
 #define RTC_IRQ 8
 
 typedef void (*rtc_callback_t) (void);
