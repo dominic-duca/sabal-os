@@ -40,9 +40,7 @@ typedef struct {
 
 void idt_init(void);
 
-void idt_update_reg(void);
-
 idt_gate_t idt_entry(uint32_t service, uint16_t segment, uint8_t type, uint8_t dpl);
-void idt_push_entry(idt_gate_t entry);
+void idt_insert_entry(uint8_t vector, idt_gate_t entry);
 
 #endif
