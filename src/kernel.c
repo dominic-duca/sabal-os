@@ -17,6 +17,52 @@ extern const char* SABAL_PALMETTO_ASCII;
 datetime_t kernel_datetime;
 bool kernel_datetime_set = 0;
 
+/* TEST */
+static const char* date_months[] = {
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September","October", "November", "December",
+};
+
+/* TEST */
+void time_add_leading_zero(char time[]) {
+    time[2] = '\0';
+    time[1] = time[0];
+    time[0] = '0';
+}
+
+/* TEST */
+void kernel_output_datetime() {
+    char year[3], day[3], hour[3], minute[3], second[3];
+
+    console_write(string_itoa_10(kernel_datetime.date.day, day));
+    console_putchar(' ');
+    console_write(date_months[kernel_datetime.date.month - 1]);
+    console_putchar(' ');
+    console_write(string_itoa_10(kernel_datetime.date.year, year));
+    console_putchar('\t');
+
+    string_itoa_10(kernel_datetime.time.hour, hour);
+    if (kernel_datetime.time.hour < 10)
+        time_add_leading_zero(hour);
+    
+    console_write(hour);
+    console_putchar(':');
+
+    string_itoa_10(kernel_datetime.time.minute, minute);
+    if (kernel_datetime.time.minute < 10)
+        time_add_leading_zero(minute);
+    
+    console_write(minute);
+    console_putchar(':');
+    
+    string_itoa_10(kernel_datetime.time.second, second);
+    if (kernel_datetime.time.second < 10)
+        time_add_leading_zero(second);
+
+    console_write(second);
+    console_write(" (UTC)\n");
+}
+
 void kernel_keyboard_callback(char key_ascii) {
     console_putchar(key_ascii);
 }
@@ -41,6 +87,8 @@ void kernel_rtc_callback(void) {
     } else {
         kernel_datetime = rtc_get_datetime();
     }
+
+    kernel_output_datetime(); /* TEST: See if kernel_datetime is correct (UTC) */
 }
 
 void kernel_idt_init(void) {
