@@ -51,11 +51,13 @@ void kernel_main(void) {
 
     gdt_init();
     idt_init();
-    
+
     kernel_idt_init(); /* Find a better name */
 
     keyboard_set_callback(kernel_keyboard_callback);
     rtc_set_callback(kernel_rtc_callback);
+
+    rtc_set_tick(1);
 
     pic_remap(IDT_EXCEPT_LIMIT, IDT_EXCEPT_LIMIT + 8);
 
