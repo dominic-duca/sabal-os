@@ -16,6 +16,10 @@ void kernel_keyboard_callback(char key_ascii) {
     console_putchar(key_ascii);
 }
 
+void kernel_rtc_callback(void) {
+    /*  */
+}
+
 void kernel_idt_init(void) {
     /* PS/2 keyboard */
     idt_insert_entry(IDT_EXCEPT_LIMIT + KEYBOARD_PS2_IRQ,
@@ -51,9 +55,12 @@ void kernel_main(void) {
     kernel_idt_init(); /* Find a better name */
 
     keyboard_set_callback(kernel_keyboard_callback);
+    rtc_set_callback(kernel_rtc_callback);
 
     pic_remap(IDT_EXCEPT_LIMIT, IDT_EXCEPT_LIMIT + 8);
+
     pic_irq_unmask(KEYBOARD_PS2_IRQ);
+    pic_irq_unmask(RTC_IRQ);
 
     __asm__ volatile ("sti");
 
