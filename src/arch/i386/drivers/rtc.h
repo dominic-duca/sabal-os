@@ -2,6 +2,8 @@
 #ifndef RTC_H
 #define RTC_H
 
+#include <stdbool.h>
+
 #include "../irq/pic.h"
 
 #include "../../../util/datetime.h"
@@ -30,6 +32,9 @@ datetime_t rtc_get_datetime(void);
 void rtc_set_callback(rtc_callback_t callback);
 
 uint8_t rtc_get_register(uint8_t register_cmos);
+void rtc_set_register(uint8_t register_cmos, uint8_t value);
+
+void rtc_set_nmi(bool nmi);
 
 void rtc_handler(void);
 
