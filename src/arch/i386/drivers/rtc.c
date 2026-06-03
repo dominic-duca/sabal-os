@@ -87,3 +87,13 @@ void rtc_handler(void) {
 
     pic_irq_eoi(RTC_IRQ);
 }
+
+void rtc_set_tick(bool tick) {
+    rtc_set_nmi(0);
+
+    /* Mask every interrupt except update */
+    uint8_t status_b = (rtc_get_register(RTC_CMOS_STATUS_B) & 0x8F) | (tick << 4);
+    rtc_set_register(RTC_CMOS_STATUS_B, status_b);
+
+    rtc_set_nmi(1);
+}

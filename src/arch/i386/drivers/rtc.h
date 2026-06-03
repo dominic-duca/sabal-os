@@ -35,6 +35,7 @@ uint8_t rtc_get_register(uint8_t register_cmos);
 void rtc_set_register(uint8_t register_cmos, uint8_t value);
 
 void rtc_set_nmi(bool nmi);
+void rtc_set_tick(bool tick); /* Sets 1 Hz update interrupt */
 
 void rtc_handler(void);
 
