@@ -64,5 +64,9 @@ void pic_irq_unmask(uint8_t irq) {
 }
 
 void pic_irq_eoi(uint8_t irq) {
-    io_outb((irq < 8) ? PIC_1_COMMAND : PIC_2_COMMAND, PIC_EOI);
+    if (irq > 7) {
+        io_outb(PIC_2_COMMAND, PIC_EOI);
+    }
+    
+    io_outb(PIC_1_COMMAND, PIC_EOI);
 }
