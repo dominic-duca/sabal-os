@@ -62,6 +62,9 @@ void rtc_set_callback(rtc_callback_t callback) {
 }
 
 void rtc_handler(void) {
+    /* Get and discard data in register C */
+    rtc_get_register(RTC_CMOS_STATUS_C);
+
     rtc_callback();
 
     pic_irq_eoi(RTC_IRQ);
