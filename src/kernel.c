@@ -16,28 +16,17 @@ void kernel_keyboard_callback(char key_ascii) {
 }
 
 void kernel_idt_init(void) {
-    /* TODO: PIT */
-    idt_push_entry(idt_entry(
-        (uint32_t) 0,
-            
-        GDT_KERNEL_CODE,
-
-        IDT_ENTRY_TYPE_INT,
-        IDT_ENTRY_DPL_0
-    ));
-
     /* PS/2 keyboard */
-    idt_push_entry(idt_entry(
-        (uint32_t) isr_stub_keyboard,
-            
-        GDT_KERNEL_CODE,
+    idt_insert_entry(IDT_EXCEPT_LIMIT + KEYBOARD_PS2_IRQ,
+        idt_entry(
+            (uint32_t) isr_stub_keyboard,
 
-        IDT_ENTRY_TYPE_INT,
-        IDT_ENTRY_DPL_0
-    ));
+            GDT_KERNEL_CODE,
 
-    idt_update_reg();
-    idt_load();
+            IDT_ENTRY_TYPE_INT,
+            IDT_ENTRY_DPL_0
+        )
+    );
 }
 
 void kernel_main(void) {
