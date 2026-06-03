@@ -5,12 +5,17 @@
 #include "arch/i386/drivers/keyboard.h"
 #include "arch/i386/drivers/rtc.h"
 
+#include "util/datetime.h"
+
 #include "console.h"
 
 extern void isr_stub_keyboard(void);    /* In isr.s */
 extern void isr_stub_rtc(void);         /* In isr.s */
 
 extern const char* SABAL_PALMETTO_ASCII;
+
+datetime_t kernel_datetime;
+bool kernel_datetime_set = 0;
 
 void kernel_keyboard_callback(char key_ascii) {
     console_putchar(key_ascii);
