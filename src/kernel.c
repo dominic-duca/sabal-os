@@ -22,7 +22,25 @@ void kernel_keyboard_callback(char key_ascii) {
 }
 
 void kernel_rtc_callback(void) {
-    /*  */
+    if (kernel_datetime_set) {
+        /* Increment time */
+        if (++kernel_datetime.time.second == 60) {
+            kernel_datetime.time.second = 0;
+
+            if (++kernel_datetime.time.minute == 60) {
+                kernel_datetime.time.minute = 0;
+
+                if (++kernel_datetime.time.hour == 60) {
+                    kernel_datetime.time.hour = 0;
+
+                    /* TODO: date.day, date.month, date.year rollover */
+                }
+            }
+        }
+
+    } else {
+        kernel_datetime = rtc_get_datetime();
+    }
 }
 
 void kernel_idt_init(void) {
