@@ -24,7 +24,7 @@ char* string_itoa(int a, char str[], int base) {
     int i = 0;
 
     if (a == 0) {
-        str[i++] = 0;
+        str[i++] = '0';
         str[i] = '\0';
 
         return str;
