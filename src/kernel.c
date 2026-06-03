@@ -3,11 +3,12 @@
 #include "arch/i386/cpu/idt.h"
 
 #include "arch/i386/drivers/keyboard.h"
+#include "arch/i386/drivers/rtc.h"
 
 #include "console.h"
 
-extern void idt_load(void);             /* In idt.s */
 extern void isr_stub_keyboard(void);    /* In isr.s */
+extern void isr_stub_rtc(void);         /* In isr.s */
 
 extern const char* SABAL_PALMETTO_ASCII;
 
@@ -21,6 +22,18 @@ void kernel_idt_init(void) {
         idt_entry(
             (uint32_t) isr_stub_keyboard,
 
+            GDT_KERNEL_CODE,
+
+            IDT_ENTRY_TYPE_INT,
+            IDT_ENTRY_DPL_0
+        )
+    );
+
+    /* RTC */
+    idt_insert_entry(IDT_EXCEPT_LIMIT + RTC_IRQ,
+        idt_entry(
+            (uint32_t) isr_stub_rtc,
+            
             GDT_KERNEL_CODE,
 
             IDT_ENTRY_TYPE_INT,
