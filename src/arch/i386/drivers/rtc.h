@@ -9,7 +9,9 @@
 #define RTC_CMOS        0x70
 #define RTC_CMOS_DATA   0x71
 
+#define RTC_CMOS_STATUS_A 0x0A
 #define RTC_CMOS_STATUS_B 0x0B
+#define RTC_CMOS_STATUS_C 0x0C
 
 #define RTC_CMOS_YEAR   0x09
 #define RTC_CMOS_MONTH  0x08
