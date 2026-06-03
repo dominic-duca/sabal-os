@@ -30,8 +30,8 @@ void pic_remap(int offset_primary, int offset_secondary) {
     io_outb(PIC_2_DATA, PIC_MODE_8086);
     io_delay();
 
-    /* Mask all IRQs */
-    io_outb(PIC_1_DATA, 0xFF);
+    /* Mask all IRQs except IRQ2 */
+    io_outb(PIC_1_DATA, 0xFB);
     io_outb(PIC_2_DATA, 0xFF);
 }
 
