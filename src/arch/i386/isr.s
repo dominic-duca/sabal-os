@@ -1,8 +1,11 @@
 
 .extern keyboard_handler /* In drivers/keyboard.h */
+.extern rtc_handler      /* In drivers/rtc.h */
 
 .global isr_stubs
+
 .global isr_stub_keyboard
+.global isr_stub_rtc
 
 .altmacro
 .macro stub i
@@ -21,6 +24,16 @@ isr_stub_keyboard:
     cld
 
     call keyboard_handler
+
+    popal
+
+    iret
+
+isr_stub_rtc:
+    pushal
+    cld
+
+    call rtc_handler
 
     popal
 
