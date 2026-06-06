@@ -9,6 +9,8 @@
 
 #include "console.h"
 
+#define MULTIBOOT_2_MAGIC 0x36D76289
+
 extern void isr_stub_keyboard(void);    /* In isr.s */
 extern void isr_stub_rtc(void);         /* In isr.s */
 
@@ -88,7 +90,7 @@ void kernel_rtc_callback(void) {
         kernel_datetime = rtc_get_datetime();
     }
 
-    kernel_output_datetime(); /* TEST: See if kernel_datetime is correct (UTC) */
+    /* kernel_output_datetime(); /* TEST: See if kernel_datetime is correct (UTC) */
 }
 
 void kernel_idt_init(void) {
@@ -117,9 +119,14 @@ void kernel_idt_init(void) {
     );
 }
 
-void kernel_main(void) {
+void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     __asm__ volatile ("cli");
-
+    
+    if (multiboot_magic != MULTIBOOT_2_MAGIC) {
+        /* Kernel not loaded by a Multiboot 2 compliant bootloader */
+        return;
+    }
+    
     gdt_init();
     idt_init();
 
