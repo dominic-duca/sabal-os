@@ -39,6 +39,9 @@ stack_top:
 _start:
     mov $stack_top, %esp
 
+    push %ebx /* Info struct pointer (Multiboot 2) */ 
+    push %eax /* Magic (Multiboot 2) */
+
     call kernel_main
 
     /* Halt indefinitely if kernel_main ever returns */
