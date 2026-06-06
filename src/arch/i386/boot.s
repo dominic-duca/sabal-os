@@ -1,18 +1,27 @@
 
-/* Multiboot magic values */
-.set ALIGN,     1 << 0
-.set MEMINFO,   1 << 1
-.set FLAGS,     ALIGN | MEMINFO
-.set MAGIC,     0x1BADB002
-.set CHECKSUM,  -(MAGIC + FLAGS)
+/* Multiboot 2 constants */
+.set MULTIBOOT_MAGIC, 0xE85250D6
+.set MULTIBOOT_ARCH,  0
+.set MULTIBOOT_LEN,   multiboot_end - multiboot_start
 
-/* Multiboot header */
+.set MULTIBOOT_SUM,   -(MULTIBOOT_MAGIC + MULTIBOOT_ARCH + MULTIBOOT_LEN)
+
+/* Multiboot 2 header */
 .section .multiboot
-.align 4
+.align 8
+multiboot_start:
+    .long MULTIBOOT_MAGIC
+    .long MULTIBOOT_ARCH
+    .long MULTIBOOT_LEN
 
-.long MAGIC
-.long FLAGS
-.long CHECKSUM
+    .long MULTIBOOT_SUM
+
+    /* End tag */
+    .short 0
+    .short 0
+    .long  8
+
+multiboot_end:
 
 /* Allocate stack */
 .section .bss
