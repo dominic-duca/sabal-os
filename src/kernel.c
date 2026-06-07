@@ -49,16 +49,15 @@ void kernel_rtc_callback(void) {
     } else {
         kernel_datetime = rtc_get_datetime();
         kernel_datetime_set = 1;
-    }
 
-    /* TEST: See if kernel_datetime is correct (UTC) */
-    /* TODO: Use automatic 0 padding (handled inside printf) */
-    console_printf("%d %s %d %c%d:%c%d:%c%d (UTC)\n",
-        kernel_datetime.date.day, date_months[kernel_datetime.date.month - 1], kernel_datetime.date.year,
-        (kernel_datetime.time.hour < 10)   ? '0' : '\0', kernel_datetime.time.hour,
-        (kernel_datetime.time.minute < 10) ? '0' : '\0', kernel_datetime.time.minute,
-        (kernel_datetime.time.second < 10) ? '0' : '\0', kernel_datetime.time.second
-    );
+        /* TODO: Use automatic 0 padding (handled inside printf) */
+        console_printf("%d %s %d %c%d:%c%d:%c%d (UTC)\n",
+            kernel_datetime.date.day, date_months[kernel_datetime.date.month - 1], kernel_datetime.date.year,
+            (kernel_datetime.time.hour < 10)   ? '0' : '\0', kernel_datetime.time.hour,
+            (kernel_datetime.time.minute < 10) ? '0' : '\0', kernel_datetime.time.minute,
+            (kernel_datetime.time.second < 10) ? '0' : '\0', kernel_datetime.time.second
+        );
+    }
 }
 
 void kernel_idt_init(void) {
