@@ -27,6 +27,4 @@ void console_putuint(unsigned int a, unsigned int base);
 
 void console_printf(const char* str, ...);
 
-void console_write_centered(const char* str);
-
 #endif

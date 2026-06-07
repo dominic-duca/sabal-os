@@ -162,9 +162,3 @@ void console_printf(const char* str, ...) {
 
     va_end(args);
 }
-
-void console_write_centered(const char* str) {
-    cursor_x = (VGA_WIDTH - string_len(str)) / 2;
-
-    console_write(str);
-}
