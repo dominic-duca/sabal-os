@@ -25,46 +25,6 @@ static const char* date_months[] = {
     "July", "August", "September","October", "November", "December",
 };
 
-/* TEST */
-void time_add_leading_zero(char time[]) {
-    time[2] = '\0';
-    time[1] = time[0];
-    time[0] = '0';
-}
-
-/* TEST */
-void kernel_output_datetime() {
-    char year[3], day[3], hour[3], minute[3], second[3];
-
-    console_write(string_itoa_10(kernel_datetime.date.day, day));
-    console_putchar(' ');
-    console_write(date_months[kernel_datetime.date.month - 1]);
-    console_putchar(' ');
-    console_write(string_itoa_10(kernel_datetime.date.year, year));
-    console_putchar('\t');
-
-    string_itoa_10(kernel_datetime.time.hour, hour);
-    if (kernel_datetime.time.hour < 10)
-        time_add_leading_zero(hour);
-    
-    console_write(hour);
-    console_putchar(':');
-
-    string_itoa_10(kernel_datetime.time.minute, minute);
-    if (kernel_datetime.time.minute < 10)
-        time_add_leading_zero(minute);
-    
-    console_write(minute);
-    console_putchar(':');
-    
-    string_itoa_10(kernel_datetime.time.second, second);
-    if (kernel_datetime.time.second < 10)
-        time_add_leading_zero(second);
-
-    console_write(second);
-    console_write(" (UTC)\n");
-}
-
 void kernel_keyboard_callback(char key_ascii) {
     console_putchar(key_ascii);
 }
@@ -91,7 +51,14 @@ void kernel_rtc_callback(void) {
         kernel_datetime_set = 1;
     }
 
-    /* kernel_output_datetime(); /* TEST: See if kernel_datetime is correct (UTC) */
+    /* TEST: See if kernel_datetime is correct (UTC) */
+    /* TODO: Use automatic 0 padding (handled inside printf) */
+    console_printf("%d %s %d %c%d:%c%d:%c%d (UTC)\n",
+        kernel_datetime.date.day, date_months[kernel_datetime.date.month - 1], kernel_datetime.date.year,
+        (kernel_datetime.time.hour < 10)   ? '0' : '\0', kernel_datetime.time.hour,
+        (kernel_datetime.time.minute < 10) ? '0' : '\0', kernel_datetime.time.minute,
+        (kernel_datetime.time.second < 10) ? '0' : '\0', kernel_datetime.time.second
+    );
 }
 
 void kernel_idt_init(void) {
@@ -131,7 +98,7 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     gdt_init();
     idt_init();
 
-    kernel_idt_init(); /* Find a better name */
+    kernel_idt_init(); /* TODO: find a better name */
 
     keyboard_set_callback(kernel_keyboard_callback);
     rtc_set_callback(kernel_rtc_callback);
@@ -146,7 +113,7 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     __asm__ volatile ("sti");
 
     console_init();
-    console_write("\nWelcome to Sabal OS!\n");
+    console_printf("\nWelcome to SabalOS!\n");
 
     while (1) {}
 }
