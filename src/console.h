@@ -21,11 +21,11 @@ void console_init(void);
 void console_update_cursor(void);
 
 void console_putchar(char c);
+void console_puts(const char* str); /* Doesn't add \n */
+
 void console_putuint(unsigned int a, unsigned int base);
 
 void console_printf(const char* str, ...);
-
-void console_write(const char* str);
 
 void console_write_centered(const char* str);
 

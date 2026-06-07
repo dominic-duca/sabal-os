@@ -99,6 +99,11 @@ void console_putchar(char c) {
     }
 }
 
+void console_puts(const char* str) {
+    for (size_t i = 0; str[i]; i++)
+        console_putchar(str[i]);
+}
+
 void console_putuint(unsigned int a, unsigned int base) {
     if (a >= base) console_putuint(a / base, base);
 
@@ -119,7 +124,7 @@ void console_printf(const char* str, ...) {
                 case 's':
                 const char* arg_str = va_arg(args, const char*);
 
-                console_write(arg_str);
+                console_puts(arg_str);
                 break;
 
                 case 'd':
@@ -156,11 +161,6 @@ void console_printf(const char* str, ...) {
     }
 
     va_end(args);
-}
-
-void console_write(const char* str) {
-    for (size_t i = 0; str[i]; i++)
-        console_putchar(str[i]);
 }
 
 void console_write_centered(const char* str) {
