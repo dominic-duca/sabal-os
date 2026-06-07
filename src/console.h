@@ -4,6 +4,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdarg.h>
 
 #include "util/string.h"
 
@@ -20,6 +21,8 @@ void console_init(void);
 void console_update_cursor(void);
 
 void console_putchar(char c);
+void console_printf(const char* str, ...);
+
 void console_write(const char* str);
 
 void console_write_centered(const char* str);

@@ -99,6 +99,58 @@ void console_putchar(char c) {
     }
 }
 
+void console_printf(const char* str, ...) {
+    va_list args;
+    va_start(args, str);
+
+    for (size_t i = 0; str[i]; i++) {
+        if (str[i] == '%') {
+            i++;
+
+            /* Very basic - Just %s, %d, %x, %c and %% for now */
+            switch (str[i]) {
+                case 's':
+                const char* arg_str = va_arg(args, const char*);
+
+                console_write(arg_str);
+                break;
+
+                case 'd':
+                int arg_dec = va_arg(args, int);
+            
+                if (arg_dec < 0) {
+                    arg_dec = -arg_dec;
+                    console_putchar('-');
+                }
+                
+                // TODO: print int
+                break;
+                
+                case 'x':
+                unsigned int arg_hex = va_arg(args, unsigned int);
+
+                // TODO: print unsigned int
+                break;
+
+                case 'c':
+                char arg_char = (char) va_arg(args, int);
+
+                console_putchar(arg_char);
+                break;
+
+                case '%':
+                console_putchar('%');
+                break;
+            }
+
+        } else {
+            console_putchar(str[i]);
+        }
+    }
+
+    va_end(args);
+}
+
 void console_write(const char* str) {
     for (size_t i = 0; str[i]; i++)
         console_putchar(str[i]);
