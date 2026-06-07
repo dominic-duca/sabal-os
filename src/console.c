@@ -99,6 +99,13 @@ void console_putchar(char c) {
     }
 }
 
+void console_putuint(unsigned int a, unsigned int base) {
+    if (a >= base) console_putuint(a / base, base);
+
+    int r = a % base;
+    console_putchar((r < 10) ? r + '0' : (r - 10) + 'a');
+}
+
 void console_printf(const char* str, ...) {
     va_list args;
     va_start(args, str);
@@ -123,13 +130,13 @@ void console_printf(const char* str, ...) {
                     console_putchar('-');
                 }
                 
-                // TODO: print int
+                console_putuint(arg_dec, 10);
                 break;
                 
                 case 'x':
                 unsigned int arg_hex = va_arg(args, unsigned int);
 
-                // TODO: print unsigned int
+                console_putuint(arg_hex, 16);
                 break;
 
                 case 'c':
