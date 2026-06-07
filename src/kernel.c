@@ -88,6 +88,7 @@ void kernel_rtc_callback(void) {
 
     } else {
         kernel_datetime = rtc_get_datetime();
+        kernel_datetime_set = 1;
     }
 
     /* kernel_output_datetime(); /* TEST: See if kernel_datetime is correct (UTC) */
@@ -145,7 +146,7 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     __asm__ volatile ("sti");
 
     console_init();
-    console_write_centered("\nWelcome to Sabal OS!\n");
+    console_write("\nWelcome to Sabal OS!\n");
 
     while (1) {}
 }
