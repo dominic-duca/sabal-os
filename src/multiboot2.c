@@ -4,7 +4,7 @@
 void multiboot_parse_info(multiboot_info_t* info) {
     /* Step through each tag in multiboot_info (the first tag is already 8-byte aligned) */
     for (multiboot_tag_t* tag = ((multiboot_info_t*) info)->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
-        tag = (multiboot_tag_t*) ((uint8_t*) tag + math_align_up(tag->limit, 8))) {
+        tag = (multiboot_tag_t*) ((uint8_t*) tag + bit_align_up(tag->limit, 8))) {
         
         switch(tag->type) {
             case MULTIBOOT_TAG_TYPE_MMAP: {

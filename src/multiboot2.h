@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include "util/bit.h"
+
 #define MULTIBOOT_2_MAGIC        0x36D76289
 
 #define MULTIBOOT_TAG_TYPE_END   0x00
