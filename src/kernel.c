@@ -8,46 +8,7 @@
 #include "util/datetime.h"
 
 #include "console.h"
-
-#define MULTIBOOT_2_MAGIC   0x36D76289
-
-#define MULTIBOOT_TAG_END   0x00
-#define MULTIBOOT_TAG_MMAP  0x06
-
-#define MULTIBOOT_MMAP_FREE 0x01
-
-typedef struct {
-    uint32_t type;
-    uint32_t limit;
-
-} multiboot_tag_t;
-
-typedef struct {
-    uint32_t limit;
-    uint32_t null;
-
-    multiboot_tag_t tags[];
-
-} multiboot_info_t;
-
-typedef struct {
-    uint64_t base;
-    uint64_t limit; /* Size of the memory region in bytes */
-    uint32_t type;
-    uint32_t null;
-
-} multiboot_mmap_entry_t;
-
-typedef struct {
-    uint32_t type;  /* 0x06 */
-    uint32_t limit;
-
-    uint32_t limit_entry;
-    uint32_t version_entry;
-
-    multiboot_mmap_entry_t entries[];
-
-} multiboot_tag_mmap_t;
+#include "multiboot2.h"
 
 extern void isr_stub_keyboard(void);    /* In isr.s */
 extern void isr_stub_rtc(void);         /* In isr.s */
@@ -137,25 +98,8 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     }
     
     gdt_init();
-
-    /* Step through each tag in multiboot_info (the first tag is already 8-byte aligned) */
-    for (multiboot_tag_t* tag = ((multiboot_info_t*) multiboot_info)->tags; tag->type != MULTIBOOT_TAG_END;
-        tag = (multiboot_tag_t*) ((uint8_t*) tag + math_align_up(tag->limit, 8))) {
-        
-        switch(tag->type) {
-            case MULTIBOOT_TAG_MMAP: {
-                multiboot_tag_mmap_t* tag_mmap = (multiboot_tag_mmap_t*) tag;
-
-                /* Step through each entry in tag_mmap */
-                for (multiboot_mmap_entry_t* mmap_entry = tag_mmap->entries; mmap_entry < (multiboot_mmap_entry_t*) ((uint8_t*) tag_mmap + tag_mmap->limit);
-                    mmap_entry = (multiboot_mmap_entry_t*) (((uint8_t*) mmap_entry) + tag_mmap->limit_entry)) {
-                    
-                    
-                }
-                break;
-            }
-        }
-    }
+    
+    multiboot_parse_info((multiboot_info_t*) multiboot_info);
 
     idt_init();
 
