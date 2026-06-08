@@ -124,6 +124,10 @@ void kernel_idt_init(void) {
     );
 }
 
+inline int math_align_up(int a, int b) {
+    return (a + (b - 1)) & ~(b - 1);
+}
+
 void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     __asm__ volatile ("cli");
     
