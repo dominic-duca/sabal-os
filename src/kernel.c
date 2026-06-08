@@ -137,6 +137,13 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     }
     
     gdt_init();
+
+    /* Step through each tag in multiboot_info (the first tag is already 8-byte aligned) */
+    for (multiboot_tag_t* tag = ((multiboot_info_t*) multiboot_info)->tags; tag->type != MULTIBOOT_TAG_END;
+        tag = (multiboot_tag_t*) ((uint8_t*) tag + math_align_up(tag->limit, 8))) {
+        
+    }
+
     idt_init();
 
     kernel_idt_init(); /* TODO: find a better name */
