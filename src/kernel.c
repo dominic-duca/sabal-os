@@ -9,7 +9,12 @@
 
 #include "console.h"
 
-#define MULTIBOOT_2_MAGIC 0x36D76289
+#define MULTIBOOT_2_MAGIC   0x36D76289
+
+#define MULTIBOOT_TAG_END   0x00
+#define MULTIBOOT_TAG_MMAP  0x06
+
+#define MULTIBOOT_MMAP_FREE 0x01
 
 typedef struct {
     uint32_t type;
