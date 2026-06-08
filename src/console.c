@@ -141,6 +141,7 @@ void console_printf(const char* str, ...) {
                 case 'x':
                 unsigned int arg_hex = va_arg(args, unsigned int);
 
+                console_puts("0x");
                 console_putuint(arg_hex, 16);
                 break;
 
