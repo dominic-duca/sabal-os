@@ -142,6 +142,19 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     for (multiboot_tag_t* tag = ((multiboot_info_t*) multiboot_info)->tags; tag->type != MULTIBOOT_TAG_END;
         tag = (multiboot_tag_t*) ((uint8_t*) tag + math_align_up(tag->limit, 8))) {
         
+        switch(tag->type) {
+            case MULTIBOOT_TAG_MMAP: {
+                multiboot_tag_mmap_t* tag_mmap = (multiboot_tag_mmap_t*) tag;
+
+                /* Step through each entry in tag_mmap */
+                for (multiboot_mmap_entry_t* mmap_entry = tag_mmap->entries; mmap_entry < (multiboot_mmap_entry_t*) ((uint8_t*) tag_mmap + tag_mmap->limit);
+                    mmap_entry = (multiboot_mmap_entry_t*) (((uint8_t*) mmap_entry) + tag_mmap->limit_entry)) {
+                    
+                    
+                }
+                break;
+            }
+        }
     }
 
     idt_init();
