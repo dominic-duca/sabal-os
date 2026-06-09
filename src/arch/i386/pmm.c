@@ -8,3 +8,7 @@ void pmm_init(void) {
         pmm_bitmap[i] = 0xFFFFFFFF;
     }
 }
+
+void pmm_free_page(uint32_t page) {
+    pmm_bitmap[page / 32] &= ~((uint32_t) 0x01 << (page % 32));
+}

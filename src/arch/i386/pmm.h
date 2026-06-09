@@ -8,5 +8,6 @@
 #define PMM_BITMAP_LIMIT 32768
 
 void pmm_init(void);
+void pmm_free_page(uint32_t page);
 
 #endif
