@@ -3,10 +3,14 @@
 
 static uint32_t pmm_bitmap[PMM_BITMAP_LIMIT];
 
+static uint32_t pmm_free_count;
+
 void pmm_init(void) {
     for (int i = 0; i < PMM_BITMAP_LIMIT; i++) {
         pmm_bitmap[i] = 0xFFFFFFFF;
     }
+
+    pmm_free_count = 0;
 }
 
 void pmm_free_page(uint32_t page) {
@@ -25,7 +29,13 @@ void pmm_free_pages(uint32_t begin, uint32_t end) {
     }
 
     /* Free individual pages */
-    for (uint32_t page = bit_floor(end, 32); page <= end; page++) {
+    for (uint32_t page = bit_floor(end, 32); page < end; page++) {
         pmm_free_page(page);
     }
+
+    pmm_free_count += end - begin;
+}
+
+uint16_t pmm_get_free_count(void) {
+    return pmm_free_count;
 }
