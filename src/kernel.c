@@ -5,10 +5,13 @@
 #include "arch/i386/drivers/keyboard.h"
 #include "arch/i386/drivers/rtc.h"
 
+#include "arch/i386/pmm.h"
+
 #include "util/datetime.h"
 
-#include "console.h"
 #include "multiboot2.h"
+
+#include "console.h"
 
 extern void isr_stub_keyboard(void);    /* In isr.s */
 extern void isr_stub_rtc(void);         /* In isr.s */
@@ -50,12 +53,14 @@ void kernel_rtc_callback(void) {
         kernel_datetime_set = 1;
 
         /* TODO: Use automatic 0 padding (handled inside printf) */
+        /*
         console_printf("%d %s %d %c%d:%c%d:%c%d (UTC)\n",
             kernel_datetime.date.day, date_months[kernel_datetime.date.month - 1], kernel_datetime.date.year,
             (kernel_datetime.time.hour < 10)   ? '0' : '\0', kernel_datetime.time.hour,
             (kernel_datetime.time.minute < 10) ? '0' : '\0', kernel_datetime.time.minute,
             (kernel_datetime.time.second < 10) ? '0' : '\0', kernel_datetime.time.second
         );
+        */
     }
 }
 
@@ -95,7 +100,18 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     
     gdt_init();
     
-    multiboot_parse_info((multiboot_info_t*) multiboot_info);
+    multiboot_info_parsed_t multiboot_info_parsed = multiboot_parse_info((multiboot_info_t*) multiboot_info);
+    
+    pmm_init();
+    for (int i = 0; i < multiboot_info_parsed.mmap.limit; i++) {
+        const uint64_t base  = multiboot_info_parsed.mmap.map[i].base,
+            limit = multiboot_info_parsed.mmap.map[i].limit; 
+
+        pmm_free_pages(
+            (uint32_t) bit_ceil (base, PMM_PAGE_SIZE)         / PMM_PAGE_SIZE, 
+            (uint32_t) bit_floor(base + limit, PMM_PAGE_SIZE) / PMM_PAGE_SIZE
+        );
+    }
 
     idt_init();
 

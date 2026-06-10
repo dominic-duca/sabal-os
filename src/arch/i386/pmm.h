@@ -9,6 +9,8 @@
 /* (32768 * 32) pages * 4 KiB/page = 4 GiB */
 #define PMM_BITMAP_LIMIT 32768
 
+#define PMM_PAGE_SIZE 4096
+
 void pmm_init(void);
 
 void pmm_free_page(uint32_t page);
