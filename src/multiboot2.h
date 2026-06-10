@@ -57,7 +57,7 @@ typedef struct {
 } multiboot_memory_parsed_t;
 
 typedef struct {
-    uint16_t map_limit;
+    uint16_t limit;
     multiboot_memory_parsed_t map[MULTIBOOT_MMAP_PARSED_LIMIT];
 
 } multiboot_mmap_parsed_t;
@@ -67,6 +67,6 @@ typedef struct {
 
 } multiboot_info_parsed_t;
 
-void multiboot_parse_info(multiboot_info_t* info);
+multiboot_info_parsed_t multiboot_parse_info(multiboot_info_t* info);
 
 #endif

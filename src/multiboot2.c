@@ -1,10 +1,14 @@
 
 #include "multiboot2.h"
 
-void multiboot_parse_info(multiboot_info_t* info) {
+multiboot_info_parsed_t multiboot_parse_info(multiboot_info_t* info) {
+    multiboot_info_parsed_t parsed = {
+        .mmap.limit = 0,
+    };
+    
     /* Step through each tag in multiboot_info (the first tag is already 8-byte aligned) */
     for (multiboot_tag_t* tag = ((multiboot_info_t*) info)->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
-        tag = (multiboot_tag_t*) ((uint8_t*) tag + bit_align_up(tag->limit, 8))) {
+        tag = (multiboot_tag_t*) ((uint8_t*) tag + bit_ceil(tag->limit, 8))) {
         
         switch(tag->type) {
             case MULTIBOOT_TAG_TYPE_MMAP: {
@@ -16,7 +20,10 @@ void multiboot_parse_info(multiboot_info_t* info) {
                     
                     switch (mmap_entry->type) {
                         case MULTIBOOT_MEMORY_FREE: {
-                            /* TODO: split free memory into pages and save them into a bitmap */
+                            parsed.mmap.map[parsed.mmap.limit].base  = mmap_entry->base;
+                            parsed.mmap.map[parsed.mmap.limit].limit = mmap_entry->limit;
+
+                            parsed.mmap.limit++;
 
                             break;
                         }
@@ -26,4 +33,6 @@ void multiboot_parse_info(multiboot_info_t* info) {
             }
         }
     }
+
+    return parsed;
 }
