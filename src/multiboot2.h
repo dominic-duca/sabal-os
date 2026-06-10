@@ -6,12 +6,14 @@
 
 #include "util/bit.h"
 
-#define MULTIBOOT_2_MAGIC        0x36D76289
+#define MULTIBOOT_2_MAGIC       0x36D76289
 
-#define MULTIBOOT_TAG_TYPE_END   0x00
-#define MULTIBOOT_TAG_TYPE_MMAP  0x06
+#define MULTIBOOT_TAG_TYPE_END  0x00
+#define MULTIBOOT_TAG_TYPE_MMAP 0x06
 
-#define MULTIBOOT_MEMORY_FREE    0x01
+#define MULTIBOOT_MEMORY_FREE   0x01
+
+#define MULTIBOOT_MMAP_PARSED_LIMIT 256
 
 typedef struct {
     uint32_t type;
@@ -45,6 +47,25 @@ typedef struct {
     multiboot_mmap_entry_t entries[];
 
 } multiboot_tag_mmap_t;
+
+/* PARSED STRUCTS */
+
+typedef struct {
+    uint64_t base;
+    uint64_t limit;
+
+} multiboot_memory_parsed_t;
+
+typedef struct {
+    uint16_t map_limit;
+    multiboot_memory_parsed_t map[MULTIBOOT_MMAP_PARSED_LIMIT];
+
+} multiboot_mmap_parsed_t;
+
+typedef struct {
+    multiboot_mmap_parsed_t mmap;
+
+} multiboot_info_parsed_t;
 
 void multiboot_parse_info(multiboot_info_t* info);
 
