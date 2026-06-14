@@ -24,4 +24,9 @@ typedef struct {
     
 } datetime_t;
 
+static const char* datetime_months[] = {
+    "", "January", "February", "March", "April", "May", "June",
+    "July", "August", "September","October", "November", "December",
+};
+
 #endif

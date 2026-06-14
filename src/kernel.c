@@ -21,12 +21,6 @@ extern const char* SABAL_PALMETTO_ASCII;
 datetime_t kernel_datetime;
 bool kernel_datetime_set = 0;
 
-/* TEST */
-static const char* date_months[] = {
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September","October", "November", "December",
-};
-
 void kernel_keyboard_callback(char key_ascii) {
     console_putchar(key_ascii);
 }
@@ -55,7 +49,7 @@ void kernel_rtc_callback(void) {
         /* TODO: Use automatic 0 padding (handled inside printf) */
         /*
         console_printf("%d %s %d %c%d:%c%d:%c%d (UTC)\n",
-            kernel_datetime.date.day, date_months[kernel_datetime.date.month - 1], kernel_datetime.date.year,
+            kernel_datetime.date.day, datetime_months[kernel_datetime.date.month], kernel_datetime.date.year,
             (kernel_datetime.time.hour < 10)   ? '0' : '\0', kernel_datetime.time.hour,
             (kernel_datetime.time.minute < 10) ? '0' : '\0', kernel_datetime.time.minute,
             (kernel_datetime.time.second < 10) ? '0' : '\0', kernel_datetime.time.second
