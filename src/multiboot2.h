@@ -19,7 +19,7 @@ typedef struct {
     uint32_t type;
     uint32_t size;
 
-} multiboot_tag_t;
+} __attribute__ ((packed)) multiboot_tag_t;
 
 typedef struct {
     uint32_t size;
@@ -27,7 +27,7 @@ typedef struct {
 
     multiboot_tag_t tags[];
 
-} multiboot_info_t;
+} __attribute__ ((packed)) multiboot_info_t;
 
 typedef struct {
     uint64_t base;
@@ -36,7 +36,7 @@ typedef struct {
     uint32_t type;
     uint32_t null;
 
-} multiboot_mmap_entry_t;
+} __attribute__ ((packed)) multiboot_mmap_entry_t;
 
 typedef struct {
     uint32_t type;  /* 0x06 */
@@ -47,7 +47,7 @@ typedef struct {
 
     multiboot_mmap_entry_t entries[];
 
-} multiboot_tag_mmap_t;
+} __attribute__ ((packed)) multiboot_tag_mmap_t;
 
 /* PARSED STRUCTS */
 
