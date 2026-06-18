@@ -95,15 +95,15 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     gdt_init();
     
     multiboot_info_parsed_t multiboot_info_parsed = multiboot_parse_info((multiboot_info_t*) multiboot_info);
-    
+
     pmm_init();
-    for (int i = 0; i < multiboot_info_parsed.mmap.limit; i++) {
-        const uint64_t base  = multiboot_info_parsed.mmap.map[i].base,
-            limit = multiboot_info_parsed.mmap.map[i].limit; 
+    for (int i = 0; i < multiboot_info_parsed.mmap.size; i++) {
+        const uint64_t base = multiboot_info_parsed.mmap.map[i].base,
+            len = multiboot_info_parsed.mmap.map[i].len; 
 
         pmm_free_pages(
             (uint32_t) bit_ceil (base, PMM_PAGE_SIZE)         / PMM_PAGE_SIZE, 
-            (uint32_t) bit_floor(base + limit, PMM_PAGE_SIZE) / PMM_PAGE_SIZE
+            (uint32_t) bit_floor(base + len, PMM_PAGE_SIZE)   / PMM_PAGE_SIZE
         );
     }
 

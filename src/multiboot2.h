@@ -17,12 +17,12 @@
 
 typedef struct {
     uint32_t type;
-    uint32_t limit;
+    uint32_t size;
 
 } multiboot_tag_t;
 
 typedef struct {
-    uint32_t limit;
+    uint32_t size;
     uint32_t null;
 
     multiboot_tag_t tags[];
@@ -31,7 +31,8 @@ typedef struct {
 
 typedef struct {
     uint64_t base;
-    uint64_t limit; /* Size of the memory region in bytes */
+    uint64_t len;   /* Size of the memory region in bytes */
+
     uint32_t type;
     uint32_t null;
 
@@ -39,10 +40,10 @@ typedef struct {
 
 typedef struct {
     uint32_t type;  /* 0x06 */
-    uint32_t limit;
+    uint32_t size;
 
-    uint32_t limit_entry;
-    uint32_t version_entry;
+    uint32_t entry_size;
+    uint32_t entry_ver;
 
     multiboot_mmap_entry_t entries[];
 
@@ -52,12 +53,12 @@ typedef struct {
 
 typedef struct {
     uint64_t base;
-    uint64_t limit;
+    uint64_t len;
 
 } multiboot_memory_parsed_t;
 
 typedef struct {
-    uint16_t limit;
+    uint16_t size;
     multiboot_memory_parsed_t map[MULTIBOOT_MMAP_PARSED_LIMIT];
 
 } multiboot_mmap_parsed_t;
