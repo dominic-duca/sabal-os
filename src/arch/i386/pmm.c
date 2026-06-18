@@ -17,7 +17,9 @@ void pmm_free_page(uint32_t page) {
     pmm_bitmap[page / 32] &= ~((uint32_t) 0x01 << (page % 32));
 }
 
-void pmm_free_pages(uint32_t begin, uint32_t end) {
+void pmm_free_pages(uint32_t begin, uint32_t len) {
+    const uint32_t end = begin + len;
+        
     /* Free individual pages */
     for (uint32_t page = begin; page < bit_ceil(begin, 32); page++) {
         pmm_free_page(page);
@@ -33,7 +35,7 @@ void pmm_free_pages(uint32_t begin, uint32_t end) {
         pmm_free_page(page);
     }
 
-    pmm_free_count += end - begin;
+    pmm_free_count += len;
 }
 
 uint16_t pmm_get_free_count(void) {

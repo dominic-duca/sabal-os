@@ -99,12 +99,16 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     pmm_init();
     for (int i = 0; i < multiboot_info_parsed.mmap.size; i++) {
         const uint64_t base = multiboot_info_parsed.mmap.map[i].base,
-            len = multiboot_info_parsed.mmap.map[i].len; 
+                       len  = multiboot_info_parsed.mmap.map[i].len;
+        
+        const uint64_t base_aligned = bit_ceil(base, PMM_PAGE_SIZE),
+                       end_aligned  = bit_floor(base + len, PMM_PAGE_SIZE);
 
-        pmm_free_pages(
-            (uint32_t) bit_ceil (base, PMM_PAGE_SIZE)         / PMM_PAGE_SIZE, 
-            (uint32_t) bit_floor(base + len, PMM_PAGE_SIZE)   / PMM_PAGE_SIZE
-        );
+        if (base_aligned >= end_aligned)
+            continue; 
+
+        pmm_free_pages((uint32_t) base_aligned / PMM_PAGE_SIZE,
+            (uint32_t) (end_aligned - base_aligned) / PMM_PAGE_SIZE);
     }
 
     idt_init();
