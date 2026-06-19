@@ -58,7 +58,7 @@ void kernel_rtc_callback(void) {
     }
 }
 
-void kernel_idt_init(void) {
+void kernel_irq_init(void) {
     /* PS/2 keyboard */
     idt_insert_entry(IDT_EXCEPT_LIMIT + KEYBOARD_PS2_IRQ,
         idt_entry(
@@ -113,7 +113,7 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
 
     idt_init();
 
-    kernel_idt_init(); /* TODO: find a better name */
+    kernel_irq_init();
 
     keyboard_set_callback(kernel_keyboard_callback);
     rtc_set_callback(kernel_rtc_callback);
