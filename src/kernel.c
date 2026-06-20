@@ -18,6 +18,9 @@ extern void isr_stub_rtc(void);         /* In isr.s */
 
 extern const char* SABAL_PALMETTO_ASCII;
 
+extern uint8_t _kernel_start[];
+extern uint8_t _kernel_end[];
+
 datetime_t kernel_datetime;
 bool kernel_datetime_set = 0;
 
