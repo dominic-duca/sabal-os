@@ -6,6 +6,8 @@ PAGE_SIZE = CONSTANT(MAXPAGESIZE);
 SECTIONS {
 	. = 2M;
 
+	_kernel_start = .;
+
 	.text 	:	ALIGN(PAGE_SIZE) {
 		*(.multiboot)
 		*(.text)
@@ -23,4 +25,6 @@ SECTIONS {
 		*(COMMON)
 		*(.bss)
 	}
+
+	_kernel_end = .;
 }
