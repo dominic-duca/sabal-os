@@ -114,6 +114,9 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
             (uint32_t) (end_aligned - base_aligned) / PMM_PAGE_SIZE);
     }
 
+    const uint32_t kernel_start = (uint32_t) _kernel_start;
+    const uint32_t kernel_end   = (uint32_t) _kernel_end;
+
     idt_init();
 
     kernel_irq_init();
