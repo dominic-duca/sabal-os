@@ -15,4 +15,6 @@ static inline uint32_t vmm_entry(uint32_t addr, uint16_t flags) {
 
 void vmm_init(void);
 
+void vmm_dir_insert(uint16_t index, uint32_t entry);
+
 #endif
