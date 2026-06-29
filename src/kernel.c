@@ -6,6 +6,7 @@
 #include "arch/i386/drivers/rtc.h"
 
 #include "arch/i386/pmm.h"
+#include "arch/i386/vmm.h"
 
 #include "util/datetime.h"
 
@@ -118,6 +119,8 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
                    kernel_end   = bit_ceil((uint32_t) _kernel_end, PMM_PAGE_SIZE);
     
     pmm_alloc_pages(kernel_start / PMM_PAGE_SIZE, (kernel_end - kernel_start) / PMM_PAGE_SIZE);
+    
+    vmm_init();
 
     idt_init();
 
