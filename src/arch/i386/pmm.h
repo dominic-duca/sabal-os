@@ -19,6 +19,6 @@ void pmm_alloc_page(uint32_t page);
 void pmm_free_pages(uint32_t begin, uint32_t len);
 void pmm_alloc_pages(uint32_t begin, uint32_t len);
 
-uint16_t pmm_get_free_count(void);
+uint32_t pmm_get_free(void);
 
 #endif

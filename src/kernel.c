@@ -141,7 +141,7 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
     console_init();
     console_printf("\nWelcome to SabalOS!\n");
 
-    console_printf("Available memory: %d MiB\n", (int) (pmm_get_free_count() * PMM_PAGE_SIZE / (1024 * 1024)));
+    console_printf("Available memory: %d MiB\n", (int) (pmm_get_free() * PMM_PAGE_SIZE / (1024 * 1024)));
 
     while (1) {}
 }

@@ -63,6 +63,6 @@ void pmm_alloc_pages(uint32_t begin, uint32_t len) {
     pmm_free_count -= len;
 }
 
-uint16_t pmm_get_free_count(void) {
+uint32_t pmm_get_free(void) {
     return pmm_free_count;
 }
