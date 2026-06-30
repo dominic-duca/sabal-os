@@ -115,7 +115,7 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
             (uint32_t) (end_aligned - base_aligned) / PMM_PAGE_SIZE);
     }
     
-    vmm_init((uint32_t) _kernel_start, (uint32_t) _kernel_end);
+    vmm_init((uint32_t) _kernel_start, (uint32_t) _kernel_end, 0xC0000000);
 
     idt_init();
 
