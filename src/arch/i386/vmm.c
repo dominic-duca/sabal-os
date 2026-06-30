@@ -11,6 +11,8 @@ void vmm_dir_insert(uint16_t index, uint32_t entry) {
 void vmm_init(uint32_t kernel_start, uint32_t kernel_end, uint32_t v_addr) {
     for (size_t i = 0; i < 1024; i++) {
         vmm_dir[i] = 0x00000000;
+        
+        vmm_table[i] = 0x00000000;
     }
 
     kernel_start = bit_floor(kernel_start, PMM_PAGE_SIZE);
