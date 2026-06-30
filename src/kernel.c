@@ -114,13 +114,8 @@ void kernel_main(uint32_t multiboot_magic, uint32_t multiboot_info) {
         pmm_free_pages((uint32_t) base_aligned / PMM_PAGE_SIZE,
             (uint32_t) (end_aligned - base_aligned) / PMM_PAGE_SIZE);
     }
-
-    const uint32_t kernel_start = bit_floor((uint32_t) _kernel_start, PMM_PAGE_SIZE),
-                   kernel_end   = bit_ceil((uint32_t) _kernel_end, PMM_PAGE_SIZE);
     
-    pmm_alloc_pages(kernel_start / PMM_PAGE_SIZE, (kernel_end - kernel_start) / PMM_PAGE_SIZE);
-    
-    vmm_init();
+    vmm_init((uint32_t) _kernel_start, (uint32_t) _kernel_end);
 
     idt_init();
 
